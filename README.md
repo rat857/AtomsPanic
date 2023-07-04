@@ -1,5 +1,5 @@
 # AtomsPanic
-GoPanic重构版
+GoPanic重构版  目前还只是个baby版
 ## 基于yaml的扫描框架
 ### yaml文件编写方法
 ```yaml
